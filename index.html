@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Community Event Scheduler</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f9f9f9;
+      padding: 40px;
+    }
+    h2 {
+      text-align: center;
+    }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    button {
+      padding: 10px 20px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Community Event Scheduler</h2>
+
+<form id="eventForm">
+  <input type="text" name="eventName" placeholder="Event Name" required>
+  <input type="text" name="organizer" placeholder="Organizer" required>
+  <input type="date" name="date" required>
+  <input type="time" name="time" required>
+  <input type="text" name="location" placeholder="Location" required>
+  <textarea name="description" placeholder="Event Description" rows="4" required></textarea>
+  <button type="submit">Submit Event</button>
+</form>
+
+<script>
+  const scriptURL = "https://script.google.com/macros/s/AKfycbwtH6ePHKeNP2uqgTSzaZSmMJbrBrs_H7jt1ctQ7Kt_OGdzja1pZNmHVmu4gB7o6AIUew/exec";
+
+  document.getElementById('eventForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const data = {
+      eventName: form.eventName.value,
+      organizer: form.organizer.value,
+      date: form.date.value,
+      time: form.time.value,
+      location: form.location.value,
+      description: form.description.value
+    };
+
+    fetch(scriptURL, {
+      method: 'POST',
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      alert("Event submitted successfully!");
+      form.reset();
+    })
+    .catch(error => {
+      alert("Something went wrong. Please try again.");
+      console.error(error);
+    });
+  });
+</script>
+
+</body>
+</html>
+
+
+
